@@ -19,6 +19,17 @@
       justify-content: center;
       align-items: center;
     }
+    .about-section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .big-button {
+      padding: 1.5rem 3rem;
+      font-size: 1.5rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -42,7 +53,7 @@
 </div>
 
 <section class="hero">
-  <div class="hero bg-base-200 min-h-screen">
+  <div class="hero bg-base-200 min-h-screen" id="main-hero">
     <div class="hero-content text-center lg:flex-row-reverse gap-16">
       <div class="text-center lg:text-left max-w-2xl" data-aos="fade-right" data-aos-duration="1000">
         <h1 class="font-bold text-4xl md:text-5xl lg:text-7xl leading-tight">
@@ -55,9 +66,55 @@
         <p class="py-6 opacity-90 text-lg md:text-xl text-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
           tech enthusiast <span class="relative text-bold text-info">&</span> upcoming entrepreneur.
         </p>
-        <a href="https://w4lkie.github.io" class="btn btn-soft btn-primary">Home</a> 
-        <button class="btn btn-soft btn-secondary">Contact</button>
+        <div class="flex flex-col items-center gap-4">
+          <a href="https://w4lkie.github.io" class="btn btn-soft btn-primary">Home</a> 
+          <button class="btn btn-soft btn-secondary">Contact</button>
+          <button id="about-btn" class="btn btn-lg big-button btn-accent mt-8">
+            Learn More About Me
+          </button>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div id="about-section" class="about-section hero bg-base-200 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold mb-8 text-primary">About Brian Walker</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="prose">
+          <h3 class="text-2xl font-semibold text-secondary">Background</h3>
+          <p class="text-lg">
+            I'm a passionate technology enthusiast with a strong interest in entrepreneurship. 
+            My journey in tech started at a young age, and I've been exploring various aspects 
+            of software development and digital innovation ever since.
+          </p>
+          <h3 class="text-2xl font-semibold text-secondary mt-6">Skills</h3>
+          <ul class="list-disc pl-5">
+            <li>Web Development (HTML, CSS, JavaScript)</li>
+            <li>UI/UX Design</li>
+            <li>Project Management</li>
+            <li>Digital Marketing</li>
+            <li>Emerging Technologies</li>
+          </ul>
+        </div>
+        <div class="prose">
+          <h3 class="text-2xl font-semibold text-secondary">Goals</h3>
+          <p class="text-lg">
+            My ambition is to bridge the gap between technology and business, creating 
+            innovative solutions that solve real-world problems. I'm particularly interested 
+            in how technology can be leveraged to create sustainable business models.
+          </p>
+          <h3 class="text-2xl font-semibold text-secondary mt-6">Interests</h3>
+          <ul class="list-disc pl-5">
+            <li>Startup Culture</li>
+            <li>Artificial Intelligence</li>
+            <li>Blockchain Technology</li>
+            <li>Digital Transformation</li>
+            <li>Mentorship & Community Building</li>
+          </ul>
+        </div>
+      </div>
+      <button id="back-btn" class="btn btn-primary mt-12">Back to Home</button>
     </div>
   </div>
 </section>
@@ -71,6 +128,11 @@
     const typewriterElement = document.getElementById("typewriter");
     const nameTextElement = document.getElementById("name-text");
     const nameContainer = document.getElementById("name-container");
+    const aboutBtn = document.getElementById("about-btn");
+    const backBtn = document.getElementById("back-btn");
+    const mainHero = document.getElementById("main-hero");
+    const aboutSection = document.getElementById("about-section");
+    
     let i = 0;
     let j = 0;
     let isTypingName = false;
@@ -94,6 +156,23 @@
             }
         }
     }
+    
+    aboutBtn.addEventListener('click', function() {
+      mainHero.style.display = 'none';
+      aboutSection.style.display = 'block';
+      setTimeout(() => {
+        aboutSection.style.opacity = '1';
+      }, 50);
+    });
+    
+    backBtn.addEventListener('click', function() {
+      aboutSection.style.opacity = '0';
+      setTimeout(() => {
+        aboutSection.style.display = 'none';
+        mainHero.style.display = 'flex';
+      }, 500);
+    });
+    
     setTimeout(type, 500);
   });
 </script>
