@@ -1,28 +1,27 @@
+<!DOCTYPE html>
 <html data-theme="synthwave">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <style
-    @import "tailwindcss";
-@plugin "daisyui" {
-  themes: all;
-}
-/* Add this to your styles */
-#name-container {
-    transition: opacity 0.3s ease-in-out;
-    display: inline-block; /* Ensures proper alignment */
-}
-    </style>
-
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.9.0/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    #name-container {
+      transition: opacity 0.3s ease-in-out;
+      display: inline-block;
+    }
+    .hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
 </head>
-  <body>
+<body>
 <div class="navbar bg-base-100 shadow-sm">
   <div class="flex-1">
     <a class="btn btn-ghost text-xl">Brian Walker</a>
@@ -32,52 +31,41 @@
     <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src="https://media.istockphoto.com/id/2026155202/photo/a-tricolor-mixed-breed-dog-listening-intently-with-a-foggy-background.webp?b=1&s=612x612&w=0&k=20&c=RzmZTKoA28cy0qwBU7CTY0mPs9SQiCQbWUhlwlcJnC8=" />
+          <img alt="Profile" src="https://media.istockphoto.com/id/2026155202/photo/a-tricolor-mixed-breed-dog-listening-intently-with-a-foggy-background.webp?b=1&s=612x612&w=0&k=20&c=RzmZTKoA28cy0qwBU7CTY0mPs9SQiCQbWUhlwlcJnC8=" />
         </div>
       </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li>
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
-          </a>
-        </li>
-      
+      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li><a class="justify-between">Profile<span class="badge">New</span></a></li>
       </ul>
     </div>
   </div>
 </div>
+
 <section class="hero">
   <div class="hero bg-base-200 min-h-screen">
-
-  <div class="hero">
-    <div class="hero bg-base-200 min-h-screen">
-  <div class="hero-content text-center lg:flex-row-reverse gap-16">
-<div class="text-center lg:text-left max-w-2xl" data-aos="fade-right" data-aos-duration="1000">
-                <h1 class="font-bold text-4xl md:text-5xl lg:text-7xl leading-tight">
-    <span id="typewriter"></span>
-    <span id="name-container" class="relative inline-block z-10 opacity-0">
-        <span class="absolute inset-x-0 bottom-0.5 h-4 bg-gradient-to-r from-primary/30 to-accent/50 animate-highlight"></span>
-        <span class="relative text-primary" id="name-text"></span>
-    </span>
-</h1>
-                <p class="py-6 opacity-90 text-lg md:text-xl text-bold  transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
-                    tech enthusiast                         <span class="relative text-bold text-info">&</span>
- upcoming entreprenuer.
-                </p>
-             <button class="btn btn-soft btn-primary">About Me</button> 
-  <button class="btn btn-soft btn-secondary">Contact</button>
-            </div>
-  </div>
-</div>
+    <div class="hero-content text-center lg:flex-row-reverse gap-16">
+      <div class="text-center lg:text-left max-w-2xl" data-aos="fade-right" data-aos-duration="1000">
+        <h1 class="font-bold text-4xl md:text-5xl lg:text-7xl leading-tight">
+          <span id="typewriter"></span>
+          <span id="name-container" class="relative inline-block z-10 opacity-0">
+            <span class="absolute inset-x-0 bottom-0.5 h-4 bg-gradient-to-r from-primary/30 to-accent/50 animate-highlight"></span>
+            <span class="relative text-primary" id="name-text"></span>
+          </span>
+        </h1>
+        <p class="py-6 opacity-90 text-lg md:text-xl text-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+          tech enthusiast <span class="relative text-bold text-info">&</span> upcoming entrepreneur.
+        </p>
+        <button class="btn btn-soft btn-primary">About Me</button> 
+        <button class="btn btn-soft btn-secondary">Contact</button>
+      </div>
+    </div>
   </div>
 </section>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    AOS.init();
+    
     const greeting = "Hello my name is ";
     const name = "Brian Walker";
     const typewriterElement = document.getElementById("typewriter");
@@ -89,33 +77,25 @@
 
     function type() {
         if (!isTypingName) {
-            // Typing the greeting
             if (i < greeting.length) {
                 typewriterElement.textContent += greeting.charAt(i);
                 i++;
-                setTimeout(type, 100); // Speed for greeting
+                setTimeout(type, 100);
             } else {
                 isTypingName = true;
-                nameContainer.style.opacity = "1"; // Show name container
-                setTimeout(type, 200); // Brief pause before name
+                nameContainer.style.opacity = "1";
+                setTimeout(type, 200);
             }
         } else {
-            // Typing the name
             if (j < name.length) {
                 nameTextElement.textContent += name.charAt(j);
                 j++;
-                setTimeout(type, 100); // Speed for name
+                setTimeout(type, 100);
             }
-            // Animation stops automatically when done
         }
     }
-
-    // Initialize AOS
-    AOS.init();
-    
-    // Start the typewriter effect
-    setTimeout(type, 500); // Initial delay before starting
-});
-    </script>
-  </body>
-    </html>
+    setTimeout(type, 500);
+  });
+</script>
+</body>
+</html>
