@@ -8,7 +8,17 @@
 
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
   <link href="style.css" rel="stylesheet" type="text/css" />
-  
+  <style
+    @import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+/* Add this to your styles */
+#name-container {
+    transition: opacity 0.3s ease-in-out;
+    display: inline-block; /* Ensures proper alignment */
+}
+    </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -66,5 +76,46 @@
 </div>
   </div>
 </section>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    const greeting = "Hello my name is ";
+    const name = "Brian Walker";
+    const typewriterElement = document.getElementById("typewriter");
+    const nameTextElement = document.getElementById("name-text");
+    const nameContainer = document.getElementById("name-container");
+    let i = 0;
+    let j = 0;
+    let isTypingName = false;
+
+    function type() {
+        if (!isTypingName) {
+            // Typing the greeting
+            if (i < greeting.length) {
+                typewriterElement.textContent += greeting.charAt(i);
+                i++;
+                setTimeout(type, 100); // Speed for greeting
+            } else {
+                isTypingName = true;
+                nameContainer.style.opacity = "1"; // Show name container
+                setTimeout(type, 200); // Brief pause before name
+            }
+        } else {
+            // Typing the name
+            if (j < name.length) {
+                nameTextElement.textContent += name.charAt(j);
+                j++;
+                setTimeout(type, 100); // Speed for name
+            }
+            // Animation stops automatically when done
+        }
+    }
+
+    // Initialize AOS
+    AOS.init();
+    
+    // Start the typewriter effect
+    setTimeout(type, 500); // Initial delay before starting
+});
+    </script>
   </body>
     </html>
