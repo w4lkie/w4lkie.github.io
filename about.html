@@ -10,31 +10,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
-    #name-container {
-      transition: opacity 0.3s ease-in-out;
-      display: inline-block;
+    .skill-card {
+      transition: transform 0.3s ease;
     }
-    .hero {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .about-section {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-    .big-button {
-      padding: 1.25rem 2.5rem;
-      font-size: 1.25rem;
-      border-radius: 0.5rem;
-      transition: all 0.3s ease;
-    }
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      width: 100%;
+    .skill-card:hover {
+      transform: translateY(-5px);
     }
   </style>
 </head>
@@ -45,133 +25,114 @@
   </div>
 </div>
 
-<section class="hero">
-  <div class="hero bg-base-200 min-h-screen" id="main-hero">
-    <div class="hero-content text-center lg:flex-row-reverse gap-16">
-      <div class="text-center lg:text-left max-w-2xl" data-aos="fade-right" data-aos-duration="1000">
-        <h1 class="font-bold text-4xl md:text-5xl lg:text-7xl leading-tight">
-          <span id="typewriter"></span>
+<section class="hero min-h-screen bg-base-200">
+  <div class="hero-content text-center flex-col">
+    <div class="max-w-4xl mx-auto px-4">
+      <div id="typewriter-container" class="mb-8" data-aos="zoom-in">
+        <h1 class="text-4xl md:text-6xl font-bold">
+          <span id="typewriter" class="text-white"></span>
           <span id="name-container" class="relative inline-block z-10 opacity-0">
             <span class="absolute inset-x-0 bottom-0.5 h-4 bg-gradient-to-r from-primary/30 to-accent/50 animate-highlight"></span>
             <span class="relative text-primary" id="name-text"></span>
           </span>
         </h1>
-        <p class="py-6 opacity-90 text-lg md:text-xl text-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
-          <span class="relative text-bold text-info">Invest In Greatness</span>
-        </p>
-        <div class="flex flex-col items-center gap-6 w-full">
-          <!-- Big button first -->
-          <button id="about-btn" class="btn btn-lg big-button btn-accent">
-            Learn More About Me
-          </button>
-          
-          <!-- Smaller buttons in a row -->
-          <div class="button-group">
-            <a href="https://w4lkie.github.io/contact" class="btn btn-soft btn-secondary">Contact</a>
-            <a href="https://w4lkie.github.io" class="btn btn-soft btn-primary">Home</a>
+      </div>
+
+      
+      <div class="grid md:grid-cols-2 gap-8 mt-12">
+        <div class="card bg-base-100 shadow-xl skill-card" data-aos="fade-right">
+          <div class="card-body">
+            <h2 class="card-title text-primary mb-4">Background</h2>
+            <p class="text-lg">
+              Passionate technology enthusiast with a strong interest in entrepreneurship. 
+              My journey in tech started at a young age, exploring various aspects of 
+              computer science.
+            </p>
+            <div class="mt-6">
+              <h3 class="text-xl font-semibold text-secondary mb-3">Core Skills</h3>
+              <div class="flex flex-wrap gap-2">
+                <div class="badge badge-accent">Web Development</div>
+                <div class="badge badge-primary">Python</div>
+                <div class="badge badge-secondary">Project Management</div>
+                <div class="badge badge-info">Digital Marketing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl skill-card" data-aos="fade-left">
+          <div class="card-body">
+            <h2 class="card-title text-primary mb-4">Goals & Interests</h2>
+            <p class="text-lg">
+              Long-term goal to master computer science and contribute meaningfully 
+              as we enter a new technological age.
+            </p>
+            <div class="mt-6">
+              <h3 class="text-xl font-semibold text-secondary mb-3">Key Interests</h3>
+              <div class="flex flex-wrap gap-2">
+                <div class="badge badge-outline">Marketing</div>
+                <div class="badge badge-outline">PC Building</div>
+                <div class="badge badge-outline">Networking</div>
+                <div class="badge badge-outline">Game Development</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div id="about-section" class="about-section hero bg-base-200 min-h-screen p-8">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-4xl font-bold mb-8 text-primary">About Brian Walker</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="prose">
-          <h3 class="text-2xl font-semibold text-secondary">Background</h3>
-          <p class="text-lg">
-            I'm a passionate technology enthusiast with a strong interest in entrepreneurship. 
-            My journey in tech started at a young age, and I've been exploring various aspects 
-            of computer science ever since.
-          </p>
-          <h3 class="text-2xl font-semibold text-secondary mt-6">Skills</h3>
-          <ul class="list-disc pl-5">
-            <li>I dabble in Web Development (HTML, CSS, JavaScript)</li>
-            <li>Python</li>
-            <li>Project Management</li>
-            <li>Digital Marketing</li>
-          </ul>
-        </div>
-        <div class="prose">
-          <h3 class="text-2xl font-semibold text-secondary">Goals</h3>
-          <p class="text-lg">
-            My long term goal is to be succesfull and learn as much about computer science as I can, and to be a helpful member of society as we move into a new age of technology.
-          </p>
-          <h3 class="text-2xl font-semibold text-secondary mt-6">Interests</h3>
-          <ul class="list-disc pl-5">
-            <li>Marketing</li>
-            <li>Python</li>
-            <li>PC building</li>
-            <li>Hardware and Networking</li>
-            <li>Video Games</li>
-          </ul>
+      <div class="card bg-base-100 shadow-xl mt-12 skill-card" data-aos="fade-up" id="contact">
+        <div class="card-body">
+          <h2 class="card-title text-primary mb-4">Get in Touch</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+          </div>
+          <div class="mt-6 text-center">
+            <a href="https://w4lkie.github.io/contact" class="btn btn-primary">
+              Go to Contact Page
+            </a>
+          </div>
         </div>
       </div>
-      <div class="flex gap-4 justify-center mt-12">
-        <button id="back-btn" class="btn btn-primary">Back</button>
-        <a href="https://w4lkie.github.io" class="btn btn-primary">Home</a>
-      </div>
+
     </div>
   </div>
 </section>
 
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    AOS.init();
-    
-    const greeting = "Here's all about";
+ document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+    const greeting = "Here's all about ";
     const name = "The Next Big Thing";
     const typewriterElement = document.getElementById("typewriter");
     const nameTextElement = document.getElementById("name-text");
     const nameContainer = document.getElementById("name-container");
-    const aboutBtn = document.getElementById("about-btn");
-    const backBtn = document.getElementById("back-btn");
-    const mainHero = document.getElementById("main-hero");
-    const aboutSection = document.getElementById("about-section");
     
-    let i = 0;
-    let j = 0;
-    let isTypingName = false;
+    let charIndex = 0;
 
-    function type() {
-        if (!isTypingName) {
-            if (i < greeting.length) {
-                typewriterElement.textContent += greeting.charAt(i);
-                i++;
-                setTimeout(type, 100);
-            } else {
-                isTypingName = true;
-                nameContainer.style.opacity = "1";
-                setTimeout(type, 200);
-            }
-        } else {
-            if (j < name.length) {
-                nameTextElement.textContent += name.charAt(j);
-                j++;
-                setTimeout(type, 100);
-            }
+    function typeWriter() {
+      if (charIndex < greeting.length) {
+        typewriterElement.textContent += greeting.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 100);
+      } else {
+        nameContainer.style.opacity = "1";
+        let nameIndex = 0;
+        function typeName() {
+          if (nameIndex < name.length) {
+            nameTextElement.textContent += name.charAt(nameIndex);
+            nameIndex++;
+            setTimeout(typeName, 100);
+          }
         }
+        typeName();
+      }
     }
-    
-    aboutBtn.addEventListener('click', function() {
-      mainHero.style.display = 'none';
-      aboutSection.style.display = 'block';
-      setTimeout(() => {
-        aboutSection.style.opacity = '1';
-      }, 50);
-    });
-    
-    backBtn.addEventListener('click', function() {
-      aboutSection.style.opacity = '0';
-      setTimeout(() => {
-        aboutSection.style.display = 'none';
-        mainHero.style.display = 'flex';
-      }, 500);
-    });
-    
-    setTimeout(type, 500);
+
+    setTimeout(typeWriter, 500);
   });
 </script>
 </body>
