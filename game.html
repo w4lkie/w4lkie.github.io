@@ -3,305 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Flappy Bird Clone</title>
+    <title>Mobile Snake Game</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             touch-action: manipulation;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            text-align: center;
-            user-select: none;
-            -webkit-user-select: none;
         }
-        #gameCanvas {
-            display: block;
-            margin: 0 auto;
-            background: #4EC0CA;
-            touch-action: none;
-        }
-        #gameContainer {
+        #game-container {
             position: relative;
+            width: 100%;
+            max-width: 400px;
             margin: 0 auto;
         }
-        #scorePanel {
-            position: absolute;
-            top: 20px;
-            width: 100%;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        #game-canvas {
+            display: block;
+            background: #000;
+            border: 2px solid #333;
         }
-        #startScreen {
+        #score-display {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 20px;
+        }
+        #controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            display: none; /* Hidden by default, shown for mobile */
+        }
+        .control-row {
+            display: flex;
+            justify-content: center;
+        }
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: manipulation;
+        }
+        #start-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
+            z-index: 10;
         }
-        #startButton {
+        #start-btn {
             margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 20px;
-            background: #FFD700;
+            padding: 15px 30px;
+            background: #4CAF50;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-        }
-        #gameOverScreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             color: white;
-        }
-        #restartButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 20px;
-            background: #FFD700;
-            border: none;
-            border-radius: 5px;
+            font-size: 18px;
             cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            #controls {
+                display: flex;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="gameContainer">
-        <canvas id="gameCanvas" width="320" height="480"></canvas>
-        <div id="scorePanel">Score: 0</div>
-        <div id="startScreen">
-            <h1>Flappy Bird</h1>
-            <p>Tap or click to fly!</p>
-            <button id="startButton">Start Game</button>
+    <div id="game-container">
+        <canvas id="game-canvas" width="400" height="400"></canvas>
+        <div id="score-display">Score: 0</div>
+        
+        <!-- Mobile controls -->
+        <div id="controls">
+            <div class="control-row">
+                <button class="control-btn" id="up-btn">↑</button>
+            </div>
+            <div class="control-row">
+                <button class="control-btn" id="left-btn">←</button>
+                <button class="control-btn" id="down-btn">↓</button>
+                <button class="control-btn" id="right-btn">→</button>
+            </div>
         </div>
-        <div id="gameOverScreen">
-            <h1>Game Over</h1>
-            <p id="finalScore">Score: 0</p>
-            <button id="restartButton">Play Again</button>
+        
+        <!-- Start screen -->
+        <div id="start-screen">
+            <h1>Snake Game</h1>
+            <p>Use arrow keys or on-screen buttons</p>
+            <button id="start-btn">Start Game</button>
         </div>
     </div>
 
     <script>
         // Game variables
-        const canvas = document.getElementById('gameCanvas');
+        const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
-        const scorePanel = document.getElementById('scorePanel');
-        const startScreen = document.getElementById('startScreen');
-        const startButton = document.getElementById('startButton');
-        const gameOverScreen = document.getElementById('gameOverScreen');
-        const finalScore = document.getElementById('finalScore');
-        const restartButton = document.getElementById('restartButton');
+        const scoreDisplay = document.getElementById('score-display');
+        const startScreen = document.getElementById('start-screen');
+        const startBtn = document.getElementById('start-btn');
         
-        // Adjust canvas size for mobile
-        function resizeCanvas() {
-            const width = Math.min(320, window.innerWidth - 20);
-            const height = Math.min(480, window.innerHeight - 20);
-            canvas.width = width;
-            canvas.height = height;
-        }
+        // Mobile control buttons
+        const upBtn = document.getElementById('up-btn');
+        const downBtn = document.getElementById('down-btn');
+        const leftBtn = document.getElementById('left-btn');
+        const rightBtn = document.getElementById('right-btn');
         
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Game objects
-        let bird = {
-            x: 50,
-            y: 150,
-            width: 30,
-            height: 30,
-            velocity: 0,
-            gravity: 0.5,
-            jump: -8,
-            color: '#FFD700'
-        };
-        
-        let pipes = [];
+        // Game settings
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
         let score = 0;
         let gameRunning = false;
-        let animationId;
-        let pipeGap = 120;
-        let pipeWidth = 50;
-        let pipeSpeed = 2;
-        let pipeFrequency = 1500; // milliseconds
-        let lastPipeTime = 0;
+        let gameSpeed = 100; // ms between updates
+        let gameLoop;
         
-        // Event listeners for controls
-        function handleInput(e) {
-            if (!gameRunning && e.type === 'click' && e.target.id !== 'startButton' && e.target.id !== 'restartButton') {
-                startGame();
-            }
-            if (gameRunning) {
-                bird.velocity = bird.jump;
-            }
-        }
+        // Snake variables
+        let snake = [
+            {x: 10, y: 10}
+        ];
+        let velocityX = 0;
+        let velocityY = 0;
+        let nextVelocityX = 0;
+        let nextVelocityY = 0;
         
-        canvas.addEventListener('click', handleInput);
-        canvas.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            handleInput(e);
-        });
+        // Food variables
+        let foodX = 5;
+        let foodY = 5;
         
-        startButton.addEventListener('click', startGame);
-        restartButton.addEventListener('click', startGame);
-        
-        // Game functions
-        function startGame() {
-            bird.y = canvas.height / 2;
-            bird.velocity = 0;
-            pipes = [];
+        // Initialize game
+        function initGame() {
+            // Reset snake
+            snake = [{x: 10, y: 10}];
+            velocityX = 0;
+            velocityY = 0;
+            nextVelocityX = 0;
+            nextVelocityY = 0;
             score = 0;
-            scorePanel.textContent = `Score: ${score}`;
+            scoreDisplay.textContent = `Score: ${score}`;
+            
+            // Place first food
+            placeFood();
+            
+            // Start game loop
+            if (gameLoop) clearInterval(gameLoop);
             gameRunning = true;
-            startScreen.style.display = 'none';
-            gameOverScreen.style.display = 'none';
-            lastPipeTime = Date.now();
-            
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-            }
-            gameLoop();
+            gameLoop = setInterval(updateGame, gameSpeed);
         }
         
-        function endGame() {
-            gameRunning = false;
-            finalScore.textContent = `Score: ${score}`;
-            gameOverScreen.style.display = 'flex';
-            cancelAnimationFrame(animationId);
-        }
-        
-        function createPipe() {
-            const minHeight = 50;
-            const maxHeight = canvas.height - pipeGap - minHeight;
-            const topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+        // Place food at random position
+        function placeFood() {
+            foodX = Math.floor(Math.random() * tileCount);
+            foodY = Math.floor(Math.random() * tileCount);
             
-            pipes.push({
-                x: canvas.width,
-                y: 0,
-                width: pipeWidth,
-                height: topHeight,
-                passed: false
-            });
-            
-            pipes.push({
-                x: canvas.width,
-                y: topHeight + pipeGap,
-                width: pipeWidth,
-                height: canvas.height - topHeight - pipeGap,
-                passed: false
-            });
-        }
-        
-        function update() {
-            // Update bird
-            bird.velocity += bird.gravity;
-            bird.y += bird.velocity;
-            
-            // Check if bird hits the ground or ceiling
-            if (bird.y + bird.height > canvas.height || bird.y < 0) {
-                endGame();
-            }
-            
-            // Create new pipes
-            const currentTime = Date.now();
-            if (currentTime - lastPipeTime > pipeFrequency && gameRunning) {
-                createPipe();
-                lastPipeTime = currentTime;
-            }
-            
-            // Update pipes
-            for (let i = 0; i < pipes.length; i++) {
-                pipes[i].x -= pipeSpeed;
-                
-                // Check for collision with bird
-                if (
-                    bird.x < pipes[i].x + pipes[i].width &&
-                    bird.x + bird.width > pipes[i].x &&
-                    bird.y < pipes[i].y + pipes[i].height &&
-                    bird.y + bird.height > pipes[i].y
-                ) {
-                    endGame();
+            // Make sure food doesn't spawn on snake
+            for (let segment of snake) {
+                if (segment.x === foodX && segment.y === foodY) {
+                    placeFood();
+                    return;
                 }
-                
-                // Check if bird passed a pipe
-                if (!pipes[i].passed && pipes[i].x + pipes[i].width < bird.x && i % 2 === 0) {
-                    pipes[i].passed = true;
-                    pipes[i+1].passed = true;
-                    score++;
-                    scorePanel.textContent = `Score: ${score}`;
-                    
-                    // Increase difficulty
-                    if (score % 5 === 0) {
-                        pipeSpeed += 0.5;
-                        pipeFrequency = Math.max(800, pipeFrequency - 100);
-                    }
+            }
+        }
+        
+        // Main game update function
+        function updateGame() {
+            // Update velocities
+            velocityX = nextVelocityX;
+            velocityY = nextVelocityY;
+            
+            // Update snake position
+            const head = {x: snake[0].x + velocityX, y: snake[0].y + velocityY};
+            
+            // Check wall collision
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                gameOver();
+                return;
+            }
+            
+            // Check self collision
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                    return;
                 }
             }
             
-            // Remove pipes that are off screen
-            pipes = pipes.filter(pipe => pipe.x + pipe.width > 0);
+            // Add new head
+            snake.unshift(head);
+            
+            // Check food collision
+            if (head.x === foodX && head.y === foodY) {
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                
+                // Increase speed every 5 points
+                if (score % 5 === 0) {
+                    gameSpeed = Math.max(50, gameSpeed - 5);
+                    clearInterval(gameLoop);
+                    gameLoop = setInterval(updateGame, gameSpeed);
+                }
+                
+                placeFood();
+            } else {
+                // Remove tail if no food eaten
+                snake.pop();
+            }
+            
+            // Draw game
+            drawGame();
         }
         
-        function draw() {
+        // Draw game state
+        function drawGame() {
             // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw background
-            ctx.fillStyle = '#4EC0CA';
+            ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Draw bird
-            ctx.fillStyle = bird.color;
-            ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+            // Draw food
+            ctx.fillStyle = 'red';
+            ctx.fillRect(foodX * gridSize, foodY * gridSize, gridSize, gridSize);
             
-            // Draw eyes
-            ctx.fillStyle = 'white';
-            ctx.fillRect(bird.x + 20, bird.y + 5, 6, 6);
-            ctx.fillStyle = 'black';
-            ctx.fillRect(bird.x + 22, bird.y + 7, 2, 2);
+            // Draw snake
+            ctx.fillStyle = 'lime';
+            for (let segment of snake) {
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+            }
             
-            // Draw beak
-            ctx.fillStyle = '#FF8C00';
-            ctx.beginPath();
-            ctx.moveTo(bird.x + 30, bird.y + 15);
-            ctx.lineTo(bird.x + 40, bird.y + 15);
-            ctx.lineTo(bird.x + 30, bird.y + 20);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Draw pipes
-            ctx.fillStyle = '#2ECC40';
-            for (let i = 0; i < pipes.length; i++) {
-                ctx.fillRect(pipes[i].x, pipes[i].y, pipes[i].width, pipes[i].height);
+            // Draw grid lines
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < tileCount; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize, canvas.height);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(0, i * gridSize);
+                ctx.lineTo(canvas.width, i * gridSize);
+                ctx.stroke();
             }
         }
         
-        function gameLoop() {
-            update();
-            draw();
-            
-            if (gameRunning) {
-                animationId = requestAnimationFrame(gameLoop);
-            }
+        // Game over function
+        function gameOver() {
+            clearInterval(gameLoop);
+            gameRunning = false;
+            startScreen.style.display = 'flex';
         }
         
-        // Initial screen
-        startScreen.style.display = 'flex';
+        // Event listeners
+        startBtn.addEventListener('click', function() {
+            startScreen.style.display = 'none';
+            initGame();
+        });
+        
+        // Keyboard controls
+        document.addEventListener('keydown', function(e) {
+            if (!gameRunning) return;
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                    if (velocityY !== 1) {
+                        nextVelocityX = 0;
+                        nextVelocityY = -1;
+                    }
+                    break;
+                case 'ArrowDown':
+                    if (velocityY !== -1) {
+                        nextVelocityX = 0;
+                        nextVelocityY = 1;
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (velocityX !== 1) {
+                        nextVelocityX = -1;
+                        nextVelocityY = 0;
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (velocityX !== -1) {
+                        nextVelocityX = 1;
+                        nextVelocityY = 0;
+                    }
+                    break;
+            }
+        });
+        
+        // Mobile controls
+        upBtn.addEventListener('click', function() {
+            if (gameRunning && velocityY !== 1) {
+                nextVelocityX = 0;
+                nextVelocityY = -1;
+            }
+        });
+        
+        downBtn.addEventListener('click', function() {
+            if (gameRunning && velocityY !== -1) {
+                nextVelocityX = 0;
+                nextVelocityY = 1;
+            }
+        });
+        
+        leftBtn.addEventListener('click', function() {
+            if (gameRunning && velocityX !== 1) {
+                nextVelocityX = -1;
+                nextVelocityY = 0;
+            }
+        });
+        
+        rightBtn.addEventListener('click', function() {
+            if (gameRunning && velocityX !== -1) {
+                nextVelocityX = 1;
+                nextVelocityY = 0;
+            }
+        });
+        
+        // Touch controls for swipe gestures
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        canvas.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            e.preventDefault();
+        }, {passive: false});
+        
+        canvas.addEventListener('touchmove', function(e) {
+            if (!gameRunning) return;
+            
+            const touchEndX = e.touches[0].clientX;
+            const touchEndY = e.touches[0].clientY;
+            
+            const dx = touchEndX - touchStartX;
+            const dy = touchEndY - touchStartY;
+            
+            // Determine primary direction
+            if (Math.abs(dx) > Math.abs(dy)) {
+                // Horizontal swipe
+                if (dx > 0 && velocityX !== -1) {
+                    nextVelocityX = 1; // Right
+                    nextVelocityY = 0;
+                } else if (dx < 0 && velocityX !== 1) {
+                    nextVelocityX = -1; // Left
+                    nextVelocityY = 0;
+                }
+            } else {
+                // Vertical swipe
+                if (dy > 0 && velocityY !== -1) {
+                    nextVelocityX = 0;
+                    nextVelocityY = 1; // Down
+                } else if (dy < 0 && velocityY !== 1) {
+                    nextVelocityX = 0;
+                    nextVelocityY = -1; // Up
+                }
+            }
+            
+            e.preventDefault();
+        }, {passive: false});
+        
+        // Initial draw
+        drawGame();
     </script>
 </body>
 </html>
