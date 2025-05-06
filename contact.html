@@ -100,35 +100,36 @@
         <!-- Contact Form -->
         <div class="contact-card bg-base-100 p-8 rounded-box shadow-lg" data-aos="fade-left">
           <h2 class="text-2xl font-bold mb-6 text-primary">Send a Message</h2>
-          <form class="space-y-4">
+          <form id="contact-form" action="https://formspree.io/f/mldbbwvp" method="POST" class="space-y-4">
             <div>
               <label class="label">
                 <span class="label-text text-secondary">Your Name</span>
               </label>
-              <input type="text" placeholder="Enter your name" class="form-input input input-bordered w-full" required>
+              <input type="text" name="name" placeholder="Enter your name" class="form-input input input-bordered w-full" required>
             </div>
             <div>
               <label class="label">
                 <span class="label-text text-secondary">Email Address</span>
               </label>
-              <input type="email" placeholder="your@email.com" class="form-input input input-bordered w-full" required>
+              <input type="email" name="email" placeholder="your@email.com" class="form-input input input-bordered w-full" required>
             </div>
             <div>
               <label class="label">
                 <span class="label-text text-secondary">Subject</span>
               </label>
-              <input type="text" placeholder="What's this about?" class="form-input input input-bordered w-full" required>
+              <input type="text" name="subject" placeholder="What's this about?" class="form-input input input-bordered w-full" required>
             </div>
             <div>
               <label class="label">
                 <span class="label-text text-secondary">Message</span>
               </label>
-              <textarea class="form-input textarea textarea-bordered w-full h-32" placeholder="Your message here..." required></textarea>
+              <textarea name="message" class="form-input textarea textarea-bordered w-full h-32" placeholder="Your message here..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary w-full mt-4">
               Send Message
             </button>
           </form>
+          <div id="form-status" class="mt-4 text-center hidden"></div>
         </div>
       </div>
       
@@ -178,6 +179,51 @@
     }
     
     setTimeout(type, 500);
+    
+    // Handle form submission
+    const form = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+    
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.innerHTML = 'Sending...';
+      
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          formStatus.textContent = 'Message sent successfully!';
+          formStatus.classList.remove('hidden', 'text-error');
+          formStatus.classList.add('text-success');
+          form.reset();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .catch(error => {
+        formStatus.textContent = 'Oops! There was a problem sending your message.';
+        formStatus.classList.remove('hidden', 'text-success');
+        formStatus.classList.add('text-error');
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Send Message';
+        formStatus.classList.remove('hidden');
+        
+        // Hide status message after 5 seconds
+        setTimeout(() => {
+          formStatus.classList.add('hidden');
+        }, 5000);
+      });
+    });
   });
 </script>
 </body>
