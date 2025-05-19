@@ -7,133 +7,86 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .skill-card {
-      transition: transform 0.3s ease;
-    }
-    .skill-card:hover {
-      transform: translateY(-5px);
-    }
-  </style>
+  <link href="css/about.css" rel="stylesheet">
 </head>
 <body>
-<div class="navbar bg-base-100 shadow-sm">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Brian Walker</a>
-  </div>
-</div>
-
-<section class="hero min-h-screen bg-base-200">
-  <div class="hero-content text-center flex-col">
-    <div class="max-w-4xl mx-auto px-4">
-      <div id="typewriter-container" class="mb-8" data-aos="zoom-in">
-        <h1 class="text-4xl md:text-6xl font-bold">
-          <span id="typewriter" class="text-white"></span>
-          <span id="name-container" class="relative inline-block z-10 opacity-0">
-            <span class="absolute inset-x-0 bottom-0.5 h-4 bg-gradient-to-r from-primary/30 to-accent/50 animate-highlight"></span>
-            <span class="relative text-primary" id="name-text"></span>
-          </span>
-        </h1>
-      </div>
-
-      
-      <div class="grid md:grid-cols-2 gap-8 mt-12">
-        <div class="card bg-base-100 shadow-xl skill-card" data-aos="fade-right">
-          <div class="card-body">
-            <h2 class="card-title text-primary mb-4">Background</h2>
-            <p class="text-lg">
-              Passionate technology enthusiast with a strong interest in entrepreneurship. 
-              My journey in tech started at a young age, exploring various aspects of 
-              computer science.
-            </p>
-            <div class="mt-6">
-              <h3 class="text-xl font-semibold text-secondary mb-3">Core Skills</h3>
-              <div class="flex flex-wrap gap-2">
-                <div class="badge badge-accent">Web Development</div>
-                <div class="badge badge-primary">Python</div>
-                <div class="badge badge-secondary">Project Management</div>
-                <div class="badge badge-info">Digital Marketing</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card bg-base-100 shadow-xl skill-card" data-aos="fade-left">
-          <div class="card-body">
-            <h2 class="card-title text-primary mb-4">Goals & Interests</h2>
-            <p class="text-lg">
-              Long-term goal to master computer science and contribute meaningfully 
-              as we enter a new technological age.
-            </p>
-            <div class="mt-6">
-              <h3 class="text-xl font-semibold text-secondary mb-3">Key Interests</h3>
-              <div class="flex flex-wrap gap-2">
-                <div class="badge badge-outline">Marketing</div>
-                <div class="badge badge-outline">PC Building</div>
-                <div class="badge badge-outline">Networking</div>
-                <div class="badge badge-outline">Game Development</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card bg-base-100 shadow-xl mt-12 skill-card" data-aos="fade-up" id="contact">
-        <div class="card-body">
-          <h2 class="card-title text-primary mb-4">Get in Touch</h2>
-          <div class="grid md:grid-cols-2 gap-6">
-          </div>
-          <div class="mt-6 text-center">
-            <a href="https://w4lkie.github.io/contact" class="btn btn-primary">
-              Go to Contact Page
-            </a>
-          </div>
-        </div>
-      </div>
-
+  <div class="navbar bg-base-100 shadow-sm">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl">Brian Walker</a>
     </div>
   </div>
-</section>
 
+  <section class="hero min-h-screen bg-base-200">
+    <div class="hero-content text-center flex-col">
+      <div class="max-w-4xl mx-auto px-4">
+        <div id="typewriter-container" class="mb-8" data-aos="zoom-in">
+          <h1 class="text-4xl md:text-6xl font-bold">
+            <span id="typewriter" class="text-white"></span>
+            <span id="name-container" class="relative inline-block z-10 opacity-0">
+              <span class="absolute inset-x-0 bottom-0.5 h-4 bg-gradient-to-r from-primary/30 to-accent/50 animate-highlight"></span>
+              <span class="relative text-primary" id="name-text"></span>
+            </span>
+          </h1>
+        </div>
 
-<script>
- document.addEventListener('DOMContentLoaded', function() {
-    AOS.init({
-      duration: 1000,
-      once: true
-    });
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+          <div class="card bg-base-100 shadow-xl skill-card" data-aos="fade-right">
+            <div class="card-body">
+              <h2 class="card-title text-primary mb-4">Background</h2>
+              <p class="text-lg">
+                Passionate technology enthusiast with a strong interest in entrepreneurship. 
+                My journey in tech started at a young age, exploring various aspects of 
+                computer science.
+              </p>
+              <div class="mt-6">
+                <h3 class="text-xl font-semibold text-secondary mb-3">Core Skills</h3>
+                <div class="flex flex-wrap gap-2">
+                  <div class="badge badge-accent">Web Development</div>
+                  <div class="badge badge-primary">Python</div>
+                  <div class="badge badge-secondary">Project Management</div>
+                  <div class="badge badge-info">Digital Marketing</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    const greeting = "Here's all about ";
-    const name = "The Next Big Thing";
-    const typewriterElement = document.getElementById("typewriter");
-    const nameTextElement = document.getElementById("name-text");
-    const nameContainer = document.getElementById("name-container");
-    
-    let charIndex = 0;
+          <div class="card bg-base-100 shadow-xl skill-card" data-aos="fade-left">
+            <div class="card-body">
+              <h2 class="card-title text-primary mb-4">Goals & Interests</h2>
+              <p class="text-lg">
+                Long-term goal to master computer science and contribute meaningfully 
+                as we enter a new technological age.
+              </p>
+              <div class="mt-6">
+                <h3 class="text-xl font-semibold text-secondary mb-3">Key Interests</h3>
+                <div class="flex flex-wrap gap-2">
+                  <div class="badge badge-outline">Marketing</div>
+                  <div class="badge badge-outline">PC Building</div>
+                  <div class="badge badge-outline">Networking</div>
+                  <div class="badge badge-outline">Game Development</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    function typeWriter() {
-      if (charIndex < greeting.length) {
-        typewriterElement.textContent += greeting.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeWriter, 100);
-      } else {
-        nameContainer.style.opacity = "1";
-        let nameIndex = 0;
-        function typeName() {
-          if (nameIndex < name.length) {
-            nameTextElement.textContent += name.charAt(nameIndex);
-            nameIndex++;
-            setTimeout(typeName, 100);
-          }
-        }
-        typeName();
-      }
-    }
+        <div class="card bg-base-100 shadow-xl mt-12 skill-card" data-aos="fade-up" id="contact">
+          <div class="card-body">
+            <h2 class="card-title text-primary mb-4">Get in Touch</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+            </div>
+            <div class="mt-6 text-center">
+              <a href="https://w4lkie.github.io/contact" class="btn btn-primary">
+                Go to Contact Page
+              </a>
+            </div>
+          </div>
+        </div>
 
-    setTimeout(typeWriter, 500);
-  });
-</script>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/about.js"></script>
 </body>
 </html>
