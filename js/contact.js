@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setTimeout(type, 500);
 
-  // Handle form submission
   const form = document.getElementById('contact-form');
   const formStatus = document.getElementById('form-status');
 
@@ -71,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
         submitButton.innerHTML = 'Send Message';
         formStatus.classList.remove('hidden');
 
-        // Hide status message after 5 seconds
         setTimeout(() => {
           formStatus.classList.add('hidden');
         }, 5000);
