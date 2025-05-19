@@ -1,36 +1,30 @@
-// Game variables
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 const scoreDisplay = document.getElementById('score-display');
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
 
-// Mobile control buttons
 const upBtn = document.getElementById('up-btn');
 const downBtn = document.getElementById('down-btn');
 const leftBtn = document.getElementById('left-btn');
 const rightBtn = document.getElementById('right-btn');
 
-// Game settings
 const gridSize = 20;
 const tileCount = canvas.width / gridSize;
 let score = 0;
 let gameRunning = false;
-let gameSpeed = 100; // ms between updates
+let gameSpeed = 100;
 let gameLoop;
 
-// Snake variables
 let snake = [{ x: 10, y: 10 }];
 let velocityX = 0;
 let velocityY = 0;
 let nextVelocityX = 0;
 let nextVelocityY = 0;
 
-// Food variables
 let foodX = 5;
 let foodY = 5;
 
-// Initialize game
 function initGame() {
   snake = [{ x: 10, y: 10 }];
   velocityX = 0;
